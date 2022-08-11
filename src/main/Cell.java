@@ -18,6 +18,6 @@ record Cell(List<Img> imgs, int x, int y){
     var isOut = h2 <= 0 || w2 <= 0 || h1 >= size.height || w1 >= size.width;
     if(isOut){ return; }
     imgs.forEach( i -> g.drawImage(
-      i.image, w1, h1, w2, h2, 0, 0, Cell.renderX, Cell.renderY, null));
+      i.image, w1, h1, w2, h2, 0, 0, Cell.renderX, Cell.renderY, null)); // draws an image scaled to the size of a cell.
   }
 }
