@@ -25,8 +25,8 @@ class Compact extends JFrame{
     });
   }
   private void phaseZero() {
-    var welcome=new JLabel("Welcome to Compact. A compact Java game!");
-    var start=new JButton("Start!");
+    var welcome = new JLabel("Welcome to Compact. A compact Java game!");
+    var start = new JButton("Start!");
     closePhase.run();
     closePhase=()->{
      remove(welcome);

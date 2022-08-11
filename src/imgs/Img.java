@@ -15,10 +15,10 @@ public enum Img{
   Sword,
   Rock;
   public final BufferedImage image;
-  Img(){image=loadImage(this.name());}
+  Img() { image = loadImage(this.name());}
   static private BufferedImage loadImage(String name){
     URL imagePath = Img.class.getResource(name+".png");
-    try{return ImageIO.read(imagePath);}
+    try{ return ImageIO.read(imagePath); }
     catch(IOException e) { throw new Error(e); }
   }
 }
