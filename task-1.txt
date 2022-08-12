@@ -1,0 +1,24 @@
+-1
+Monster.java        Monster.location()                          10
+Monster.java        Monster.location(Point)                     11
+Monster.java        Monster.ping(Model)                         15
+Monster.java        Monster.draw(Graphics, Point, Dimension)    30
+
+Direction.java
+
+-2 
+A)
+
+B)
+
+-3
+A)
+Cells.forAll() is currently used preform actions on other Cells that are within a specific range. (Done via visitor pattern.)
+
+B)
+We could use this to implement an AoE ability where the character performs an attack on Coord p and int range determines the size of that
+AoE attack. A fire spell for example that sets any of those cells on fire (given that our game is a top-down Minecraft-y type
+game, this would be the equivilant of a ghast fireball) or a potion effect that gives buffs/debuffs to friends/enemies within a certain range 
+(the Minecraft equivilant being a splash potion).
+
+-4
