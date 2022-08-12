@@ -2,49 +2,49 @@ package main;
 
 enum Direction{
   None(0d,0d){},
-  Up(0d,-1d){ 
-    Direction right(){return UpRight;}
-    Direction left(){return UpLeft;}
+  Up(0d,-1d){
+    @Override Direction right(){return UpRight;}
+    @Override Direction left(){return UpLeft;}
     Direction unUn(){return None;}
   },
   UpRight(+0.7071d,-0.7071d){
-    Direction up(){return this;}
-    Direction right(){return this;}
-    Direction unUp(){return Right;}
-    Direction unRight(){return Up;}
+    @Override Direction up(){return this;}
+    @Override Direction right(){return this;}
+    @Override Direction unUp(){return Right;}
+    @Override Direction unRight(){return Up;}
   },
   Right(+1d,0d){
-    Direction up(){return UpRight;}
-    Direction down(){return DownRight;}
-    Direction unRight(){return None;}
+    @Override Direction up(){return UpRight;}
+    @Override Direction down(){return DownRight;}
+    @Override Direction unRight(){return None;}
   },
   DownRight(+0.7071d,+0.7071d){
-    Direction right(){return this;}
-    Direction down(){return this;}
-    Direction unDown(){return Right;}
-    Direction unRight(){return Down;}
+    @Override Direction right(){return this;}
+    @Override Direction down(){return this;}
+    @Override Direction unDown(){return Right;}
+    @Override Direction unRight(){return Down;}
   },
   Down(0d,+1d){
-    Direction right(){return DownRight;}
-    Direction left(){return DownLeft;}
-    Direction unDown(){return None;}
+    @Override Direction right(){return DownRight;}
+    @Override Direction left(){return DownLeft;}
+    @Override Direction unDown(){return None;}
   },
   DownLeft(-0.7071d,+0.7071d){
-    Direction down(){return this;}
-    Direction left(){return this;}
-    Direction unDown(){return Left;}
-    Direction unLeft(){return Down;}
+    @Override Direction down(){return this;}
+    @Override Direction left(){return this;}
+    @Override Direction unDown(){return Left;}
+    @Override Direction unLeft(){return Down;}
   },
   Left(-1d,0d){
-    Direction up(){return UpLeft;}
-    Direction down(){return DownLeft;}
-    Direction unLeft(){return None;}
+    @Override Direction up(){return UpLeft;}
+    @Override Direction down(){return DownLeft;}
+    @Override Direction unLeft(){return None;}
   },
   UpLeft(-0.7071d,-0.7071d){
-    Direction up(){return this;}
-    Direction left(){return this;}
-    Direction unUp(){return Left;}
-    Direction unLeft(){return Up;}
+    @Override Direction up(){return this;}
+    @Override Direction left(){return this;}
+    @Override Direction unUp(){return Left;}
+    @Override Direction unLeft(){return Up;}
   };
   public final Point arrow;
   Direction up(){return Up;}
