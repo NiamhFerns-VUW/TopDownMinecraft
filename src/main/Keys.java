@@ -14,15 +14,12 @@ class Keys implements KeyListener {
     actionsPressed.put(keyCode,onPressed);
     actionsReleased.put(keyCode,onReleased);
   }
-  @Override // 5
-  public void keyTyped(KeyEvent e){}
-  @Override // 6
-  public void keyPressed(KeyEvent e){
+  @Override public void keyTyped(KeyEvent e){}
+  @Override public void keyPressed(KeyEvent e){
     assert SwingUtilities.isEventDispatchThread();
     actionsPressed.getOrDefault(e.getKeyCode(),()->{}).run();
   }
-  @Override // 7
-  public void keyReleased(KeyEvent e){
+  @Override public void keyReleased(KeyEvent e){
     assert SwingUtilities.isEventDispatchThread();
     actionsReleased.getOrDefault(e.getKeyCode(),()->{}).run();
   }

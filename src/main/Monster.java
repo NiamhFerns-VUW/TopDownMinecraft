@@ -7,15 +7,12 @@ import imgs.Img;
 
 class Monster implements Entity{
   private Point location;
-  @Override // 1
-  public Point location(){ return location; }
-  @Override // 2
-  public void location(Point p){ location = p; }
+  @Override public Point location(){ return location; }
+  @Override public void location(Point p){ location = p; }
   Monster(Point location){ this.location = location; }
   public double speed(){ return 0.05d; }
 
-  @Override // 3
-  public void ping(Model m){
+  @Override public void ping(Model m){
     var arrow = m.camera().location().distance(location);
     double size = arrow.size();
     arrow = arrow.times(speed() / size);
@@ -30,8 +27,7 @@ class Monster implements Entity{
     outer.location(outer.location().add(arrow));
     return size;
   }
-  @Override // 4
-  public void draw(Graphics g, Point center, Dimension size) {
+  @Override public void draw(Graphics g, Point center, Dimension size) {
     drawImg(Img.AwakeMonster.image, g, center, size);
   }
 }
