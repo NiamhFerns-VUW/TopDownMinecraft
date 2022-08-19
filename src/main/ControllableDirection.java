@@ -7,6 +7,6 @@ abstract class ControllableDirection{
   public Direction direction(){ return direction; }
   public void direction(Direction d){ direction=d; }
   public Runnable set(Function<Direction,Direction> f){
-    return ()->direction=f.apply(direction);
+    return () -> direction = f.apply( direction );
   }
 }

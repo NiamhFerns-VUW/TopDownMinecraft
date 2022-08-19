@@ -2,32 +2,52 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import imgs.Img;
 
+interface MonsterState {
+  public BufferedImage img();
+  public void update(Model player, Monster enemy);
+}
+
+record MonsterAwake() implements MonsterState {
+  @Override public BufferedImage img() { return Img.AwakeMonster.image; }
+  @Override public void update(Model player, Monster enemy) {
+    var arrow = player.camera().location().distance(enemy.location());
+    double size = arrow.size();
+    if(size >= 6.0d) { enemy.setMonsterState(new MonsterAsleep()); return; }
+    if(size < 0.6d){ player.onGameOver(); return; }
+    enemy.location(enemy.location().add(arrow.times(enemy.speed() / size)));
+  }
+}
+
+record MonsterAsleep() implements MonsterState {
+  @Override public BufferedImage img() { return Img.SleepMonster.image;}
+  @Override public void update(Model player, Monster enemy) {
+    if (player.camera().location().distance(enemy.location()).size() < 6.0d) enemy.setMonsterState(new MonsterAwake());
+  }
+}
+record MonsterDead(int delay) implements MonsterState {
+  @Override public BufferedImage img() { return Img.DeadMonster.image; }
+  @Override public void update(Model player, Monster enemy) {
+  }
+}
+
 class Monster implements Entity{
+
+  private MonsterState monsterState;
   private Point location;
   @Override public Point location(){ return location; }
   @Override public void location(Point p){ location = p; }
-  Monster(Point location){ this.location = location; }
+  Monster(Point location){ this.location = location; monsterState = new MonsterAwake(); }
   public double speed(){ return 0.05d; }
+  public void setMonsterState(MonsterState s) { monsterState = s;}
 
   @Override public void ping(Model m){
-    var arrow = m.camera().location().distance(location);
-    double size = arrow.size();
-    arrow = arrow.times(speed() / size);
-    location = location.add(arrow); 
-    if(size < 0.6d){ m.onGameOver(); }
-  }
-
-  public double chaseTarget(Monster outer, Point target){
-    var arrow = target.distance(outer.location());
-    double size = arrow.size();
-    arrow = arrow.times(speed() / size);
-    outer.location(outer.location().add(arrow));
-    return size;
+    monsterState.update(m, this);
   }
   @Override public void draw(Graphics g, Point center, Dimension size) {
-    drawImg(Img.AwakeMonster.image, g, center, size);
+    drawImg(monsterState.img(), g, center, size);
   }
 }
