@@ -12,8 +12,8 @@ class Viewport extends JPanel{
   public Point center(){
     return model.camera().location();
   }
-  
-  public void paintComponent(Graphics g) {
+
+  @Override public void paintComponent(Graphics g) {
     super.paintComponent(g);//Cell.renderX,Cell.renderY
     Dimension s = getSize();
     var centerP = new Point(

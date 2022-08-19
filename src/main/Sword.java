@@ -11,7 +11,7 @@ class Sword extends ControllableDirection implements Entity{
   public double distance(){ return 0.8d; }
   public double speed(){ return 0.2d; }
   Sword(Entity wielder){ this.wielder=wielder; }
-  public Point location(){ 
+  @Override public Point location(){
     var dir = new Point(Math.sin(weaponRadiant),Math.cos(weaponRadiant));
     return dir.times(distance()).add(wielder.location());
   }
@@ -20,8 +20,8 @@ class Sword extends ControllableDirection implements Entity{
   }
 
   public double effectRange(){ return 0.3d; }
-  
-  public void ping(Model m){
+
+  @Override public void ping(Model m){
     weaponRadiant+=direction().arrow(speed()).x();
     weaponRadiant%=Math.PI*2d;
     var l = this.location();
@@ -30,7 +30,7 @@ class Sword extends ControllableDirection implements Entity{
       .filter(e->e.location().distance(l).size()<effectRange())
       .forEach(e->onHit(m,e));
   }
-  public void draw(Graphics g, Point center, Dimension size) {
+  @Override public void draw(Graphics g, Point center, Dimension size) {
     drawImg(Img.Sword.image, g, center, size);
   }
 }
