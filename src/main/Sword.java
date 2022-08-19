@@ -16,7 +16,7 @@ class Sword extends ControllableDirection implements Entity{
     return dir.times(distance()).add(wielder.location());
   }
   public void onHit(Model m, Entity e){
-    if(e instanceof Monster){ m.remove(e); }
+    if(e instanceof Monster){ ((Monster) e).setMonsterState(new MonsterDead()); }
   }
 
   public double effectRange(){ return 0.3d; }

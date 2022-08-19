@@ -28,21 +28,29 @@ record MonsterAsleep() implements MonsterState {
     if (player.camera().location().distance(enemy.location()).size() < 6.0d) enemy.setMonsterState(new MonsterAwake());
   }
 }
-record MonsterDead(int delay) implements MonsterState {
+record MonsterDead() implements MonsterState {
   @Override public BufferedImage img() { return Img.DeadMonster.image; }
   @Override public void update(Model player, Monster enemy) {
+    if(enemy.lifetime() <= 0) player.remove(enemy);
+    else enemy.lifetime(enemy.lifetime() - 1);
   }
 }
 
 class Monster implements Entity{
-
+  private int lifetime;
   private MonsterState monsterState;
   private Point location;
   @Override public Point location(){ return location; }
   @Override public void location(Point p){ location = p; }
-  Monster(Point location){ this.location = location; monsterState = new MonsterAwake(); }
+  Monster(Point location){
+    this.location = location;
+    monsterState = new MonsterAwake();
+    lifetime = 100; // Lifetime in pings.
+  }
   public double speed(){ return 0.05d; }
   public void setMonsterState(MonsterState s) { monsterState = s;}
+  int lifetime() { return lifetime; }
+  void lifetime(int l) { lifetime = l; }
 
   @Override public void ping(Model m){
     monsterState.update(m, this);
