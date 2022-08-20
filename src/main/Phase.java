@@ -38,11 +38,13 @@ record Phase(Model model, Controller controller){
     Sword s = new Sword(c);
     Cells cells = new Cells();
     var m = getPlayer(c, s, cells, next, first);
+    var r = new Monster(new Point(16, 16));
+    r.setMonsterState(new MonsterRoaming(new Point(8, 8)));
     m.add(List.of(
             new Monster(new Point(0,0)),
             new Monster(new Point(16,0)),
             new Monster(new Point(0,16)),
-            new Monster(new Point(16,16))
+            r
             ));
     return new Phase(m,new Controller(c,s));
   }
@@ -52,7 +54,7 @@ record Phase(Model model, Controller controller){
     Cells cells = new Cells();
     var m = getPlayer(c, s, cells, next, first);
     m.add(List.of(
-            new Monster(new Point(0,0))
+            new Monster(new Point(8,8))
             ));
     return new Phase(m,new Controller(c,s));
   }

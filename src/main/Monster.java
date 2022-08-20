@@ -3,6 +3,7 @@ package main;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import imgs.Img;
 
@@ -33,6 +34,27 @@ record MonsterDead() implements MonsterState {
   @Override public void update(Model player, Monster enemy) {
     if(enemy.lifetime() <= 0) player.remove(enemy);
     else enemy.lifetime(enemy.lifetime() - 1);
+  }
+}
+
+class MonsterRoaming implements MonsterState {
+  private Point target;
+  private int ticks;
+  private Random r = new Random();
+
+  @Override public BufferedImage img() { return Img.AwakeMonster.image; }
+  @Override public void update(Model player, Monster enemy) {
+    ticks++;
+    if(ticks % 50 == 0) target = new Point(r.nextInt(17), r.nextInt(17));
+    var arrow = target.distance(enemy.location());
+    double size = arrow.size();
+    if(player.camera().location().distance(enemy.location()).size() < 0.6d){ player.onGameOver(); return; }
+    enemy.location(enemy.location().add(arrow.times(enemy.speed() / size)));
+  }
+
+  public MonsterRoaming(Point p) {
+    target = p;
+    ticks = 0;
   }
 }
 
