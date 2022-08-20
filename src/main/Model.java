@@ -1,11 +1,13 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Model{
   Camera camera();
   List<Entity> entities();
   void remove(Entity e);
+  void add(List<Entity> e);
   Cells cells();
   void onGameOver();
   void onNextLevel();
