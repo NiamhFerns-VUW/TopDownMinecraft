@@ -45,7 +45,18 @@ class Compact extends JFrame{
     setPhase(Phase.level2(this::phaseThree,this::phaseZero));
   }
   private void phaseThree(){
-    setPhase(Phase.level3(this::phaseOne,this::phaseZero));
+    setPhase(Phase.level3(this::phaseEnd,this::phaseZero));
+  }
+
+  private void phaseEnd() {
+    var welcome = new JLabel("Victory!");
+    closePhase.run();
+    closePhase=()->{
+      remove(welcome);
+    };
+    add(BorderLayout.CENTER,welcome);
+    setPreferredSize(new Dimension(800,400));
+    pack();
   }
   void setPhase(Phase p){
     //set up the viewport and the timer

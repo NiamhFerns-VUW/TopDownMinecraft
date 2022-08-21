@@ -8,8 +8,8 @@ import imgs.Img;
 class Sword extends ControllableDirection implements Entity{
   private Entity wielder;
   private double weaponRadiant = 0;
-  public double distance(){ return 0.8d; }
-  public double speed(){ return 0.2d; }
+  public double distance(){ return wielder instanceof  Monster ? 1.5d : 0.8d; }
+  public double speed(){ return wielder instanceof  Monster ? 0.4d : 0.2d; }
   Sword(Entity wielder){ this.wielder=wielder; if(wielder instanceof Monster) { this.direction(Direction.Left); } }
   @Override public Point location(){
     var dir = new Point(Math.sin(weaponRadiant),Math.cos(weaponRadiant));

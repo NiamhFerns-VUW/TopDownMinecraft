@@ -44,6 +44,8 @@ Viewport.java       Viewport.paintComponent(Graphics)           16
 
 Total Overrides: 42
 
+Direction.java      Direction.unUp()                             8 \\ After finishing task 1-7, this can be added.
+
 -2 
 A) 
 This is the state pattern. State is held in the private direction field inherrited by both
@@ -72,5 +74,32 @@ game, this would be the equivilant of a ghast fireball) or a potion effect that 
 (the Minecraft equivilant being a splash potion).
 
 -4
-A)
+A) This implements the strategy pattern. 
+
+B) This pattern is implemented by having each 'strategy' being the different levels. We create a new Viewport that contains a phase level. The
+levels will all have a model that is supplied by the Phase.levelX methods in the Phase class. This model has a ping() method that will then 
+act on the Entity objects it has. The setPhase function doesn't need to know what ping(), it just knows that ping is a strategy that it can call 
+on every *tick* of the game.
+
+-5
+**COULDN'T ANSWER**
+
+-6
+    addWindowListener(new WindowAdapter(){
+      public void windowClosed(WindowEvent e){closePhase.run();}
+    });
+
+In this case we are passing an annonymous inner class so that we can override the windowClosed() method. This allows us to change the behaviour
+such that it calls closePhase.run() instead of the standard behaviour.
+
+If we just passed a lambda, we would not be able to override the method as java has no way of knowing what method to override.
+
+-7
+A) Currently there is an incorrectly named method override in the Up() state of the Dirction enum.
+
+B) `Direction unUn(){return None;}` becomes `@Override Direction unUp(){return None;}` and is located on line 8 of the Direction.java file.
+
+C) Spellcheckers, Checkstyle, and Linting functionality for IDEs like intellij/eclipse will all help. The checkstyle plugins could point out that we 
+have a potentially misnamed variable (based on it being unused and similar to other methods). The spellcheckers would point out that the function is 
+misspelled (unUn makes no sense in English). Linters will give us a quick highlight to show that the method or variable is unused.
 
