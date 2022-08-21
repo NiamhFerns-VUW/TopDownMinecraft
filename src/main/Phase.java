@@ -53,9 +53,9 @@ record Phase(Model model, Controller controller){
     Sword s = new Sword(c);
     Cells cells = new Cells();
     var m = getPlayer(c, s, cells, next, first);
-    m.add(List.of(
-            new Monster(new Point(8,8))
-            ));
+    Monster mon = new Monster(new Point(8,8));
+    Sword monS = new Sword(mon);
+    m.add(List.of(mon, monS));
     return new Phase(m,new Controller(c,s));
   }
 }
