@@ -30,6 +30,7 @@ class Sword extends ControllableDirection implements Entity{
       .filter(e->e!=this)
       .filter(e->e.location().distance(l).size()<effectRange())
       .forEach(e->onHit(m,e));
+    if (wielder instanceof Monster && ((Monster) wielder).getMonsterState().equals("MonsterDead")) { m.remove(this); }
   }
   @Override public void draw(Graphics g, Point center, Dimension size) {
     drawImg(Img.Sword.image, g, center, size);

@@ -71,6 +71,7 @@ class Monster implements Entity{
   }
   public double speed(){ return 0.05d; }
   public void setMonsterState(MonsterState s) { monsterState = s;}
+  public String getMonsterState() { return monsterState.getClass().getSimpleName();}
   int lifetime() { return lifetime; }
   void lifetime(int l) { lifetime = l; }
 

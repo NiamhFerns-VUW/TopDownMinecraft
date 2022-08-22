@@ -1,20 +1,20 @@
 package main;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
+import javax.swing.*;
 
 class Compact extends JFrame{
   private static final long serialVersionUID = 1L;
   Runnable closePhase = ()->{};
   Phase currentPhase;
+  private Map<String, Integer> bindings;
   Compact(){
     assert SwingUtilities.isEventDispatchThread();
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -23,29 +23,51 @@ class Compact extends JFrame{
     addWindowListener(new WindowAdapter(){
       public void windowClosed(WindowEvent e){closePhase.run();}
     });
+    bindings = new HashMap<>();
   }
+
+  // Bindings will just be set to whatever the last character is.
+  private void setBindings(Map<String, JTextField> fields) {
+    fields.forEach((e, f) -> {
+      if(!f.getText().isEmpty())
+        bindings.put(e, KeyEvent.getExtendedKeyCodeForChar(f.getText().charAt(f.getText().length() - 1)));
+    });
+  }
+
   private void phaseZero() {
     var welcome = new JLabel("Welcome to Compact. A compact Java game!");
     var start = new JButton("Start!");
+    var p = new JPanel();
+    p.setLayout(new GridLayout(0, 2));
+    Map<String, JTextField> fields = new HashMap<>();
+    fields.put("Up", new JTextField("W"));
+    fields.put("Down", new JTextField("S"));
+    fields.put("Left", new JTextField("A"));
+    fields.put("Right", new JTextField("D"));
+    fields.put("SLeft", new JTextField("O"));
+    fields.put("SRight", new JTextField("P"));
     closePhase.run();
     closePhase=()->{
      remove(welcome);
      remove(start);
+     remove(p);
      };
-    add(BorderLayout.CENTER,welcome);
+    fields.forEach((s, f) -> {p.add(new JLabel(s)); p.add(f);});
+    add(BorderLayout.NORTH,welcome);
     add(BorderLayout.SOUTH,start);
-    start.addActionListener(e->phaseOne());
+    add(BorderLayout.CENTER,p);
+    start.addActionListener(e -> { setBindings(fields); phaseOne(); });
     setPreferredSize(new Dimension(800,400));
     pack();
   }
   private void phaseOne(){
-    setPhase(Phase.level1(this::phaseTwo,this::phaseZero));
+    setPhase(Phase.level1(this::phaseTwo,this::phaseZero,bindings));
   }
   private void phaseTwo(){
-    setPhase(Phase.level2(this::phaseThree,this::phaseZero));
+    setPhase(Phase.level2(this::phaseThree,this::phaseZero,bindings));
   }
   private void phaseThree(){
-    setPhase(Phase.level3(this::phaseEnd,this::phaseZero));
+    setPhase(Phase.level3(this::phaseEnd,this::phaseZero,bindings));
   }
 
   private void phaseEnd() {

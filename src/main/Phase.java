@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,15 +26,15 @@ record Phase(Model model, Controller controller){
       public void onNextLevel(){ next.run(); }
     };
   }
-  static Phase level1(Runnable next, Runnable first) {
+  static Phase level1(Runnable next, Runnable first, Map<String, Integer> bindings) {
     Camera c = new Camera(new Point(5,5));
     Sword s = new Sword(c);
     Cells cells = new Cells();
     var m = getPlayer(c, s, cells, next, first);
     m.add(List.of(new Monster(new Point(0,0))));
-    return new Phase(m,new Controller(c,s));
+    return new Phase(m,new Controller(c,s, bindings));
   }
-  static Phase level2(Runnable next, Runnable first) {
+  static Phase level2(Runnable next, Runnable first, Map<String, Integer> bindings) {
     Camera c = new Camera(new Point(5,5));
     Sword s = new Sword(c);
     Cells cells = new Cells();
@@ -46,9 +47,9 @@ record Phase(Model model, Controller controller){
             new Monster(new Point(0,16)),
             r
             ));
-    return new Phase(m,new Controller(c,s));
+    return new Phase(m,new Controller(c,s, bindings));
   }
-  static Phase level3(Runnable next, Runnable first) {
+  static Phase level3(Runnable next, Runnable first, Map<String, Integer> bindings) {
     Camera c = new Camera(new Point(5,5));
     Sword s = new Sword(c);
     Cells cells = new Cells();
@@ -56,6 +57,6 @@ record Phase(Model model, Controller controller){
     Monster mon = new Monster(new Point(8,8));
     Sword monS = new Sword(mon);
     m.add(List.of(mon, monS));
-    return new Phase(m,new Controller(c,s));
+    return new Phase(m,new Controller(c,s, bindings));
   }
 }
