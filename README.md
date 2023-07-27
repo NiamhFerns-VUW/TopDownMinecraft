@@ -1,3 +1,11 @@
+# Top Down Minecraft
+
+Software engineering assignment aimed at getting comfortable with design patterns & functional features of Java for SWEN 225.
+
+**Imported from Victoria University Gitlab.**
+
+*Below this line is for assignment submission requirements.*
+
 # SWEN 225 Assignment 1
 
 Assignment 1 for SWEN 225. 
